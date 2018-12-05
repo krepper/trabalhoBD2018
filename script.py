@@ -13,11 +13,12 @@ EMAILS = ['gmail.com', 'outlook.com', 'hotmail.com', 'bol.com']
 USUARIOS = []
 MURAIS = []
 POSTAGENS = []
+COMENTARIOS = []
 
 def print_letreiro(mensagem):
-    print("=======================================================================")
-    print(mensagem)
-    print("=======================================================================")
+    print("#=======================================================================")
+    print("#"+mensagem)
+    print("#=======================================================================")
 
 '''
 =======================================================================
@@ -49,7 +50,7 @@ def gerar_usuario(sexo):
 
     email = usuario+"@"+EMAILS[random.randint(0, len(EMAILS)-1)]
 
-    query = "INSERT INTO usuarios VALUES ('%s', '%s', '%s', '%s', '%s', null);  " % (usuario, nome, email, str(random.randint(0, 999999)),sexo)
+    query = "INSERT INTO usuarios VALUES ('%s', '%s', '%s', '%s', '%s', 'PADRAO');  " % (usuario, nome, email, str(random.randint(0, 999999)),sexo)
 
     USUARIOS.append(usuario)
     return(query)
@@ -117,12 +118,64 @@ def gerar_script_postagens(quantidade):
 
     return script
 
+'''
+=======================================================================
+                                CRIAR POSTAGENS
+=======================================================================
+
+QUERY
+
+INSERT INTO comentarios VALUES (id, mensagem, POSTAGEM_id, USUARIOS_usuario);
+CURRENT_TIMESTAMP()
+'''
+def gerar_script_comentarios(quantidade):
+    i = 0
+    script = ''
+
+    while(i < quantidade):
+        try:
+            script += "INSERT INTO comentarios VALUES (null, 'COMENTARIO TESTE', %s, '%s');  " % (str(random.randint(1, len(MURAIS))), USUARIOS[random.randint(0, len(USUARIOS)-1)])
+        except:
+            quantidade += 1
+
+        i += 1
+
+    return script
+
+'''
+=======================================================================
+                                CRIAR POSTAGENS
+=======================================================================
+
+QUERY
+
+INSERT INTO curtidas VALUES (POSTAGEM_id, USUARIOS_usuario);
+CURRENT_TIMESTAMP()
+'''
+def gerar_script_curtidas(quantidade):
+    i = 0
+    script = ''
+    
+    while(i < quantidade):
+        try:
+            script += "INSERT INTO curtidas VALUES (%s, '%s');  " % (str(random.randint(1, len(POSTAGENS))), USUARIOS[random.randint(0, len(USUARIOS)-1)])
+        except:
+            quantidade += 1
+
+        i += 1
+
+    return script
+
 
 print_letreiro("SQL USUARIOS")
 print(gerar_script_usuarios(10))
 print_letreiro("SQL MURAIS")
 print(gerar_script_murais(5))
 print_letreiro("SQL POSTAGENS")
-print(gerar_script_postagens(5))
+print(gerar_script_postagens(10))
+print_letreiro("SQL COMENTARIOS")
+print(gerar_script_comentarios(50))
+print_letreiro("SQL CURTIDAS")
+print(gerar_script_curtidas(50))
 
 
