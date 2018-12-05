@@ -108,7 +108,7 @@ def gerar_script_postagens(quantidade):
 
     while(i < quantidade):
         try:
-            script += "INSERT INTO postagens VALUES (null, CURRENT_TIMESTAMP(), 'POSTAGEM TESTE', 'localhost', %s, '%s');  " % (str(MURAIS[random.randint(1, len(MURAIS))], USUARIOS[random.randint(0, len(USUARIOS)-1)]))
+            script += "INSERT INTO postagens VALUES (null, CURRENT_TIMESTAMP(), 'POSTAGEM TESTE', 'localhost', %s, '%s');  " % (str(random.randint(1, len(MURAIS))), USUARIOS[random.randint(0, len(USUARIOS)-1)])
             POSTAGENS.append(i)
         except:
             quantidade += 1
