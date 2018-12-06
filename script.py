@@ -4,8 +4,8 @@ import random
 GERADOR DE COMANDOS SQL
 '''
 
-NOMES_MASC = ['Miguel', 'Lucas', 'Guilherme', 'Gabriel', 'Enzo', 'Arthur', 'Rafael', 'Joao', 'Gustavo', 'Pedro']
-NOMES_FEM = ['Beatriz', 'Laura', 'Maria', 'Julia', 'Ana', 'Alice', 'Sofia', 'Maria Eduarda', 'Larissa', 'Mariana']
+NOMES_MASC = ['Miguel', 'Lucas', 'Guilherme', 'Gabriel', 'Luan', 'Enzo', 'Arthur', 'Rafael', 'Joao', 'Gustavo', 'Pedro', 'Felipe']
+NOMES_FEM = ['Beatriz', 'Laura', 'Maria', 'Julia', 'Ana', 'Alice', 'Sofia', 'Maria Eduarda', 'Larissa', 'Mariana', 'Luana']
 SOBRENOMES = ['Silva', 'Souza', 'Costa', 'Santos', 'Oliveira', 'Pereira', 'Rodrigues', 'Almeida']
 
 EMAILS = ['gmail.com', 'outlook.com', 'hotmail.com', 'bol.com']
@@ -14,6 +14,9 @@ USUARIOS = []
 MURAIS = []
 POSTAGENS = []
 COMENTARIOS = []
+CURTIDAS = []
+POSTAGENS_SALVAS = []
+LEMBRETES = []
 
 def print_letreiro(mensagem):
     print("#=======================================================================")
@@ -144,7 +147,7 @@ def gerar_script_comentarios(quantidade):
 
 '''
 =======================================================================
-                                CRIAR POSTAGENS
+                                CRIAR CURTIDAS
 =======================================================================
 
 QUERY
@@ -158,7 +161,75 @@ def gerar_script_curtidas(quantidade):
     
     while(i < quantidade):
         try:
-            script += "INSERT INTO curtidas VALUES (%s, '%s');  " % (str(random.randint(1, len(POSTAGENS))), USUARIOS[random.randint(0, len(USUARIOS)-1)])
+            combinacao = [random.randint(1, len(POSTAGENS)), USUARIOS[random.randint(0, len(USUARIOS)-1)]]
+
+            if combinacao in CURTIDAS:
+                pass
+            else:
+                script += "INSERT INTO curtidas VALUES (%s, '%s');  " % (int(combinacao[0]), str(combinacao[1]))
+                CURTIDAS.append(combinacao)
+
+        except:
+            quantidade += 1
+
+        i += 1
+
+    return script
+
+'''
+=======================================================================
+                        SALVAR POSTAGEM
+=======================================================================
+
+QUERY
+
+INSERT INTO post_salvos VALUES (POSTAGEM_id, USUARIOS_usuario);
+CURRENT_TIMESTAMP()
+'''
+def gerar_script_postsalvos(quantidade):
+    i = 0
+    script = ''
+    
+    while(i < quantidade):
+        try:
+            combinacao = [random.randint(1, len(POSTAGENS)), USUARIOS[random.randint(0, len(USUARIOS)-1)]]
+
+            if combinacao in POSTAGENS_SALVAS:
+                pass
+            else:
+                script += "INSERT INTO post_salvos VALUES (%s, '%s');  " % (int(combinacao[0]), str(combinacao[1]))
+                POSTAGENS_SALVAS.append(combinacao)
+
+        except:
+            quantidade += 1
+
+        i += 1
+
+    return script
+
+'''
+=======================================================================
+                        CRIAR LEMBRETE
+=======================================================================
+
+QUERY
+
+INSERT INTO lembretes VALUES (POSTAGEM_id, USUARIOS_usuario, CURRENT_DATE + 1 );
+'''
+def gerar_script_lembretes(quantidade):
+    i = 0
+    script = ''
+    
+    while(i < quantidade):
+        try:
+            combinacao = [random.randint(1, len(POSTAGENS)), USUARIOS[random.randint(0, len(USUARIOS)-1)]]
+
+            if combinacao in LEMBRETES:
+                pass
+            else:
+                script += "INSERT INTO lembretes VALUES (%s, '%s', %s);  " % (int(combinacao[0]), str(combinacao[1]), 'CURRENT_DATE+'+str(random.randint(1, 2)))
+                LEMBRETES.append(combinacao)
+
         except:
             quantidade += 1
 
@@ -168,14 +239,18 @@ def gerar_script_curtidas(quantidade):
 
 
 print_letreiro("SQL USUARIOS")
-print(gerar_script_usuarios(10))
+print(gerar_script_usuarios(5))
 print_letreiro("SQL MURAIS")
-print(gerar_script_murais(5))
+print(gerar_script_murais(2))
 print_letreiro("SQL POSTAGENS")
 print(gerar_script_postagens(10))
 print_letreiro("SQL COMENTARIOS")
-print(gerar_script_comentarios(50))
+print(gerar_script_comentarios(15))
 print_letreiro("SQL CURTIDAS")
-print(gerar_script_curtidas(50))
+print(gerar_script_curtidas(20))
+print_letreiro("SQL POSTAGENS SALVAS")
+print(gerar_script_postsalvos(10))
+print_letreiro("SQL LEMBRETES")
+print(gerar_script_lembretes(5))
 
 
