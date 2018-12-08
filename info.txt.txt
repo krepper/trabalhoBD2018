@@ -1,0 +1,9 @@
+Pode apresentar erros de CASE-SENSITIVE dependendo da lingua que importar o banco.
+O nome das tabelas precisam estar em maiúsculas
+
+Exemplo:
+
+USUARIOS
+MURAIS
+EVENTOS
+...

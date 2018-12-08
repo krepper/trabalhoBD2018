@@ -166,7 +166,7 @@ def gerar_script_curtidas(quantidade):
             if combinacao in CURTIDAS:
                 pass
             else:
-                script += "INSERT INTO curtidas VALUES (%s, '%s');  " % (int(combinacao[0]), str(combinacao[1]))
+                script += "INSERT INTO CURTIDAS VALUES (%s, '%s');  " % (int(combinacao[0]), str(combinacao[1]))
                 CURTIDAS.append(combinacao)
 
         except:
@@ -197,7 +197,7 @@ def gerar_script_postsalvos(quantidade):
             if combinacao in POSTAGENS_SALVAS:
                 pass
             else:
-                script += "INSERT INTO post_salvos VALUES (%s, '%s');  " % (int(combinacao[0]), str(combinacao[1]))
+                script += "INSERT INTO POST_SALVOS VALUES (%s, '%s');  " % (int(combinacao[0]), str(combinacao[1]))
                 POSTAGENS_SALVAS.append(combinacao)
 
         except:
@@ -227,7 +227,7 @@ def gerar_script_lembretes(quantidade):
             if combinacao in LEMBRETES:
                 pass
             else:
-                script += "INSERT INTO lembretes VALUES (%s, '%s', %s);  " % (int(combinacao[0]), str(combinacao[1]), 'CURRENT_DATE+'+str(random.randint(1, 2)))
+                script += "INSERT INTO LEMBRETES VALUES (%s, '%s', %s);  " % (int(combinacao[0]), str(combinacao[1]), 'CURRENT_DATE+'+str(random.randint(1, 2)))
                 LEMBRETES.append(combinacao)
 
         except:

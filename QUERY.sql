@@ -1,7 +1,7 @@
 /*
     01. Selecionar todos os comentários de um post                                                                                   - OK
     02. Listar todos os usuários que curtiram um post                                                                                - OK
-    03. Selecionar todos  os murais de um círculo de interesses                                                                      - --
+    03. Selecionar todos  os murais de um círculo de interesses                                                                      - OK
     04. Selecionar todos os posts com pelo menos 3 comentários                                                                       - OK
     05. Selecionar todos os usuários que curtiram um post                                                                            - OK
     06. Selecionar todos os posts salvos por um usuário                                                                              - OK
@@ -16,31 +16,34 @@
 */
 
 --01
-SELECT * FROM comentarios WHERE POSTAGEM_id = 2;
+SELECT * FROM COMENTARIOS WHERE POSTAGEM_id = 2;
 
 --02
-SELECT USUARIOS_usuario FROM curtidas WHERE POSTAGEM_id = 6;
+SELECT USUARIOS_usuario FROM CURTIDAS WHERE POSTAGEM_id = 6;
+
+--03
+SELECT MURAIS.* FROM CIRCULO_INTERESSES as CI, MURAIS WHERE CI.USUARIOS_usuario = 'USUARIO';
 
 --04
-SELECT *, COUNT(POSTAGEM_id) FROM comentarios GROUP BY POSTAGEM_id HAVING COUNT(POSTAGEM_id) > 3;
+SELECT *, COUNT(POSTAGEM_id) FROM COMENTARIOS GROUP BY POSTAGEM_id HAVING COUNT(POSTAGEM_id) > 3;
 
 --05
-SELECT * FROM curtidas WHERE POSTAGEM_id = 6;
+SELECT * FROM CURTIDAS WHERE POSTAGEM_id = 6;
 
 --06
-SELECT postagens.* FROM postagens INNER JOIN post_salvos ON post_salvos.POSTAGEM_id = postagens.id AND post_salvos.USUARIOS_usuario = 'larissacosta9782';
+SELECT POSTAGENS.* FROM POSTAGENS INNER JOIN post_salvos ON post_salvos.POSTAGEM_id = postagens.id AND post_salvos.USUARIOS_usuario = 'USUARIO';
 
 --07
-SELECT * FROM lembretes WHERE data = CURRENT_DATE+1;
+SELECT * FROM LEMBRETES WHERE data = CURRENT_DATE+1;
 
 --08
-SELECT usuarios.* FROM usuarios, postagens WHERE usuarios.usuario = postagens.USUARIOS_usuario GROUP BY usuarios.usuario ORDER BY COUNT(postagens.USUARIOS_usuario) DESC LIMIT 1;
+SELECT USUARIOS.* FROM USUARIOS, POSTAGENS WHERE USUARIOS.usuario = POSTAGENS.USUARIOS_usuario GROUP BY USUARIOS.usuario ORDER BY COUNT(postagens.USUARIOS_usuario) DESC LIMIT 1;
 
 --11
-SELECT * FROM postagens WHERE data = CURRENT_DATE-1;
+SELECT * FROM POSTAGENS WHERE data = CURRENT_DATE-1;
 
 --13
 --SELECT comentarios.*
 
 --14
-SELECT COUNT(*) FROM curtidas WHERE POSTAGEM_id = 7;
+SELECT COUNT(*) FROM CURTIDAS WHERE POSTAGEM_id = 7;
